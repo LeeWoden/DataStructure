@@ -26,3 +26,16 @@
 *.exe
 *.out
 *.app
+
+# VC 6.0
+*.exe
+*.ilk
+*.pch
+*.pdb
+*.obj
+*.idb
+*.pdb
+*.dsp
+*.dsw
+*.opt
+*.plg
