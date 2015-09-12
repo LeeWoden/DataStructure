@@ -223,17 +223,6 @@ void GenList<T>::Free(GenListNode<T> *p)
 			Free( del->info.sublist );
 		delete del;
 	}
-/*
-	//考虑表头、子表，当作广义表
-	for ( GenListNode<T> *q = p->sublist, q != NULL; q=q->next )
-	{
-		if ( q->type == LIST )
-			Free( q->sublist );
-
-		delete q;
-	}
-	delete p;
-*/
 }
 
 template <typename T>
