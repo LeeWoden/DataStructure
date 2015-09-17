@@ -11,8 +11,8 @@ template <typename T>
 struct TreeNode
 {
 	T data;
-	int degree; //Ê÷½ÚµãµÄ¶È
-	TreeNode<T> *firstChild, *nextSibling; //º¢×ÓĞÖµÜ·¨±íÊ¾Ê÷
+	int degree; //æ ‘èŠ‚ç‚¹çš„åº¦
+	TreeNode<T> *firstChild, *nextSibling; //å­©å­å…„å¼Ÿæ³•è¡¨ç¤ºæ ‘
 
 	TreeNode(T val, TreeNode<T> *child = NULL, TreeNode<T> *sibling = NULL )
 		: data( val ), degree( 0 ), firstChild( child ), nextSibling( sibling ) {}
@@ -28,11 +28,11 @@ class Tree
 			: root( NULL ), endTag( end ) {}
 		~Tree() { Destroy(root); }
 
-		void PreOrder(void (*visit)(TreeNode<T> *t)) { PreOrder(root, visit); } //Ê÷µÄÇ°Ğò <=> ¶ş²æÊ÷µÄÇ°Ğò
-		void PostOrder(void (*visit)(TreeNode<T> *t)) { PostOrder(root, visit); } //Ê÷µÄºóĞò <=> ¶ş²æÊ÷µÄÖĞĞò
+		void PreOrder(void (*visit)(TreeNode<T> *t)) { PreOrder(root, visit); } //æ ‘çš„å‰åº <=> äºŒå‰æ ‘çš„å‰åº
+		void PostOrder(void (*visit)(TreeNode<T> *t)) { PostOrder(root, visit); } //æ ‘çš„ååº <=> äºŒå‰æ ‘çš„ä¸­åº
 //		void LevelOrder() const { LevelOrder(root, visit); }
-		void IntendedText(ostream &out = cout){	//½«Ê÷ÓÃËõ¸ñÎÄ±¾ĞÎÊ½Êä³ö	
-			IntendedText(root, string(), out);//string()ÊÇ¹¹Ôìº¯Êı
+		void IntendedText(ostream &out = cout){	//å°†æ ‘ç”¨ç¼©æ ¼æ–‡æœ¬å½¢å¼è¾“å‡º	
+			IntendedText(root, string(), out);//string()æ˜¯æ„é€ å‡½æ•°
 		}
 
 		int Depth() const { return Depth(root); }
@@ -138,13 +138,13 @@ void Tree<T>::IntendedText(TreeNode<T> *subTree, string str, ostream &out)
 {
 	TreeNode<T> *p = subTree;
 	while ( p )
-	{   //Éî¶ÈÓÅÏÈ
+	{   //æ·±åº¦ä¼˜å…ˆ
 		out << str << p->data << endl;
-		string temp = str + string("\t");//×¢Òâ±í´ïÊ½×îºóÒ»Ïî¹¹ÔìÎŞÃû±ê×¼´®
+		string temp = str + string("\t");//æ³¨æ„è¡¨è¾¾å¼æœ€åä¸€é¡¹æ„é€ æ— åæ ‡å‡†ä¸²
 		if (p->firstChild){
-			IntendedText(p->firstChild, temp, out);//Éî¶Èµİ¹é
+			IntendedText(p->firstChild, temp, out);//æ·±åº¦é€’å½’
 		}
-		p = p->nextSibling;//¹ã¶ÈÑ­»·
+		p = p->nextSibling;//å¹¿åº¦å¾ªç¯
 	}
 }
 
@@ -160,8 +160,8 @@ int Tree<T>::Size(TreeNode<T> *r) const
 template <typename T>
 int Tree<T>::LeafSize(TreeNode<T> *r) const
 {
-	//É­ÁÖµÄ½Ç¶ÈË¼¿¼
-	//Èç¹ûÒÔ¶ş²æÊ÷µÄË¼Â·£¬×÷ÎªÒ»¸öÒ¶×Ó½Úµã£¬ÄÜ·µ»Ø1Âğ£¿µ±È»²»ÄÜ£¬»¹Òª¿¼²ìËüµÄÓĞĞÖµÜ½Úµã£»ÏÔÈ»´ËÂ·²»Í¨¡£
+	//æ£®æ—çš„è§’åº¦æ€è€ƒ
+	//å¦‚æœä»¥äºŒå‰æ ‘çš„æ€è·¯ï¼Œä½œä¸ºä¸€ä¸ªå¶å­èŠ‚ç‚¹ï¼Œèƒ½è¿”å›1å—ï¼Ÿå½“ç„¶ä¸èƒ½ï¼Œè¿˜è¦è€ƒå¯Ÿå®ƒçš„å…„å¼ŸèŠ‚ç‚¹ï¼›æ˜¾ç„¶æ­¤è·¯ä¸é€šã€‚
 	if ( r == NULL )
 		return 0;
 
@@ -179,7 +179,7 @@ int Tree<T>::LeafSize(TreeNode<T> *r) const
 template <typename T>
 int Tree<T>::Depth(TreeNode<T> *r) const
 {
-	//É­ÁÖË¼Â·
+	//æ£®æ—æ€è·¯
 	if ( r == NULL )
 		return 0;
 
@@ -195,7 +195,7 @@ int Tree<T>::Depth(TreeNode<T> *r) const
 	}
 	return maxDepth + 1;
 /*
-    //¶ş²æÊ÷Ë¼Â·
+    //äºŒå‰æ ‘æ€è·¯
 	if ( r == NULL )
 		return 0;
 
@@ -227,7 +227,7 @@ void Tree<T>::LeafPath(TreeNode<T> *p, vector<TreeNode<T> *> &stack, vector<vect
 		return ;
 
 	stack.push_back( p );
-	//·¢ÏÖÒ¶×Ó½Úµã£¬Ö»Òª½«Ã¿Ò»²ãÑ¡ÔñµÄ½Úµã·ÅÔÚÂ·¾¶¼´¿É£¬ÏÔÈ»ÊÇ¸¸×Ó¶ÔµÄ¸¸½Úµã
+	//å‘ç°å¶å­èŠ‚ç‚¹ï¼Œåªè¦å°†æ¯ä¸€å±‚é€‰æ‹©çš„èŠ‚ç‚¹æ”¾åœ¨è·¯å¾„å³å¯ï¼Œæ˜¾ç„¶æ˜¯çˆ¶å­å¯¹çš„çˆ¶èŠ‚ç‚¹
 	if ( p->firstChild == NULL )
 	{
 		vector<T> path;
