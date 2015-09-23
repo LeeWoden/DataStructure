@@ -22,19 +22,60 @@ class Huffuman
 	public:
 		Huffuman() : tree( NULL ), leafSize( 0 ) {}
 		~Huffuman() { delete []tree; }
-
+		void Code(T &x);
+		void Decode(int codes[], int n);
+		
 	private:
 		HuffumanNode<T> *tree;
-		int leafSize; //Ò¶×ÓÊıÁ¿n£¬¹ş·òÂüÊıµÄ½ÚµãÊıÁ¿Îª2*n - 1
+		int leafSize; //å¶å­æ•°é‡nï¼Œå“ˆå¤«æ›¼æ•°çš„èŠ‚ç‚¹æ•°é‡ä¸º2*n - 1
 		vector<vector<int> > codes;
 
 		void CreateHuffuman( instream &in = cin );
 };
 
 template <typename T>
-void Huffuman<T>::CreateHuffuman( instream &in = cin )
+void Huffuman<T>::Code( T &x )
 {
+	//å®šä½
+    for ( int index = 0; index < leafSize && tree[index].data != x; index++ ) {}
+    if ( index == leafSize )
+    {
+		cout << "è¯·è¾“å…¥æ°å½“çš„å­—ç¬¦!" << endl;
+		exit( 0 );
+    }
+	//ç¼–ç 
+	vector<int> codes;
+	for ( ; tree[index].parent != -1; index = tree[index].parent)
+	{
+		int parent = tree[index].parent;
+		if ( tree[parent].lchild == index )
+			codes.push_back( 0 );
+		else
+			codes.push_back( 1 );
+	}
 	
+	//è¾“å‡º
+	cout << x << " : ";
+	for ( int i = codes.size() - 1; i >= 0; i-- )
+		cout << codes[i];
+	cout << endl;
+}
+
+template <typename T>
+void Huffuman<T>::Decode(int codes[], int n)
+{
+	int currentPos = 2 * this->leafSize - 2;
+	for ( int i = 0; i < n; i++ )
+	{
+		if ( codes[n] == 0 )
+			currentPos = tree[i].lchild;
+		else if ( codes[n] == 1 )
+			currentPos = tree[i].rchild;
+		
+		if ( tree[i].lchild == -1 && tree[i].rchild == -1 )
+			cout << tree[i].data;	
+	}
+	cout << endl;
 }
 
 #endif
